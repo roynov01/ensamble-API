@@ -1,0 +1,36 @@
+---
+title: "Ensenbl"
+output: html_notebook
+---
+
+```{r}
+# if (!require("BiocManager", quietly = TRUE)) {
+#   install.packages("BiocManager")}
+# 
+# BiocManager::install("biomaRt")
+```
+
+
+```{r}
+library(biomaRt)
+```
+
+
+```{r}
+# clear workspace
+
+#mouse gene names (think about working with ENS names), change from ENS to gene nickname
+
+mart = useEnsembl(biomart="ensembl", dataset="mmusculus_gene_ensembl", version=100)
+# check version in Ensemble archive (GRC38, MM8 etc.)
+
+attributes = listAttributes(mart)
+
+# choose which attributes you want in the table
+gene_ids = getBM(attributes = c("ensembl_gene_id","external_gene_name","entrezgene_id","gene_biotype",
+                                "description"), mart = mart)
+
+write.csv(gene_ids,"X:\\roy\\resources\\Ensemble\\ensemble_entrez_geneId_conversion.csv")
+```
+
+
